@@ -1,23 +1,22 @@
 <template>
   <div>
-    <h1>test</h1>
-    <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span>
+    <h1>{{ name }}</h1>
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
+import { Component } from 'vue-property-decorator';
 import { ipcRenderer } from 'electron';
-export default {
-  name: 'app',
-  data () {
-    return {
-      //
-    }
-  },
+
+@Component
+export default class App extends Vue {
+  name: string = 'test';
+
   mounted() {
     ipcRenderer.send('test.ping', 'lol');
-    ipcRenderer.on('test.pong', (event, arg) => {
-      console.log(arg);
+    ipcRenderer.on('test.pong', (event, arg: string) => {
+      this.name = arg;
     });
   }
 }

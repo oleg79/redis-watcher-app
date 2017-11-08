@@ -3,7 +3,7 @@ const webpack = require('webpack')
 
 module.exports = {
   target: 'electron',
-  entry: './src/main.js',
+  entry: './src/main.ts',
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
@@ -11,6 +11,14 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.ts$/,
+        exclude: /node_modules|vue\/src/,
+        loader: 'ts-loader',
+        options: {
+          appendTsSuffixTo: [/\.vue$/]
+        }
+      },
       {
         test: /\.css$/,
         use: [
@@ -74,7 +82,7 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue.esm.js'
     },
-    extensions: ['*', '.js', '.vue', '.json']
+    extensions: ['*', '.ts', '.js', '.vue', '.json']
   },
   devServer: {
     historyApiFallback: true,
@@ -84,20 +92,7 @@ module.exports = {
   performance: {
     hints: false
   },
-  devtool: '#eval-source-map',
-  // externals: [
-  //   (() => {
-  //     const IGNORES = [
-  //       'electron'
-  //     ];
-  //     return (context, request, callback) => {
-  //       if (IGNORES.indexOf(request) >= 0) {
-  //         return callback(null, `require('${request}')`);
-  //       }
-  //       return callback();
-  //     };
-  //   })()
-  // ]
+  devtool: '#eval-source-map'
 }
 
 if (process.env.NODE_ENV === 'production') {
