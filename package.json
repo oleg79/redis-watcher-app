@@ -1,0 +1,44 @@
+{
+  "name": "redis-watcher-app",
+  "description": "Electron + Vue based redis administration app",
+  "version": "0.0.1",
+  "main": "main.js",
+  "author": "oleg79 <0112oleg@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev-vue": "cross-env NODE_ENV=development webpack --watch",
+    "dev": "cross-env NODE_ENV=development electron .",
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "electron": "^1.7.9",
+    "redis": "^2.8.0",
+    "vue": "^2.5.3"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-stage-3": "^6.24.1",
+    "cross-env": "^5.0.5",
+    "css-loader": "^0.28.7",
+    "file-loader": "^1.1.4",
+    "node-sass": "^4.5.3",
+    "sass-loader": "^6.0.6",
+    "vue-loader": "^13.0.5",
+    "vue-template-compiler": "^2.4.4",
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.9.1"
+  },
+  "keywords": [
+    "electron",
+    "vue",
+    "redis"
+  ]
+}
