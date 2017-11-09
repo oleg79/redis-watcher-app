@@ -1,5 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
+const TSLintPlugin = require('tslint-webpack-plugin')
 
 module.exports = {
   target: 'electron',
@@ -80,7 +81,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'vue$': 'vue/dist/vue.esm.js'
+      vue$: 'vue/dist/vue.esm.js'
     },
     extensions: ['*', '.ts', '.js', '.vue', '.json']
   },
@@ -112,6 +113,9 @@ if (process.env.NODE_ENV === 'production') {
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
+    }),
+    new TSLintPlugin({
+      files: ['./src/**/*.ts', './src/**/*.vue']
     })
-  ])
+  ]);
 }
