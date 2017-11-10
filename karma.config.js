@@ -46,7 +46,7 @@ const configuration = {
 };
 
 if (process.env.TRAVIS) {
-  .browsers = ['Chrome_travis_ci'];
+  configuration.browsers = ['Chrome_travis_ci'];
 }
 
 module.exports = (config) => {
