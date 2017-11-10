@@ -14,7 +14,9 @@
     "bluebird": "^3.5.1",
     "electron": "^1.7.9",
     "redis": "^2.8.0",
-    "vue": "^2.5.3"
+    "vue": "^2.5.3",
+    "vue-electron": "^1.0.6",
+    "vue-typescript": "^0.7.0"
   },
   "browserslist": [
     "> 1%",
@@ -33,12 +35,14 @@
     "sass-loader": "^6.0.6",
     "ts-loader": "^3.1.1",
     "tslint": "^5.8.0",
+    "tslint-loader": "^3.5.3",
     "tslint-webpack-plugin": "^1.0.0",
     "typescript": "^2.6.1",
     "vue-class-component": "^6.1.0",
     "vue-loader": "^13.0.5",
     "vue-property-decorator": "^6.0.0",
     "vue-template-compiler": "^2.4.4",
+    "vue-typescript-import-dts": "^3.1.1",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.9.1"
   },

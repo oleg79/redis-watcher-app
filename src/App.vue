@@ -5,19 +5,20 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
-import { ipcRenderer } from 'electron';
+import { ipcRenderer } from 'electron'
+import { Vue, Component } from 'vue-property-decorator'
 
 @Component
 export default class App extends Vue {
-  name: string = 'test';
+  name: string = 'test'
 
   mounted() {
-    ipcRenderer.send('test.ping', 'lol');
+// TODO: work out how to declare Electron within typescript
+//    const { ipcRenderer } = this.$electron;
+    ipcRenderer.send('test.ping', 'lol')
     ipcRenderer.on('test.pong', (event, arg: string) => {
       this.name = arg;
-    });
+    })
   }
 }
 </script>
