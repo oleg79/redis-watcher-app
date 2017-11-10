@@ -22,7 +22,7 @@ module.exports = (config) => {
       stats: 'errors-only',
     },
 
-    browsers: process.env.TRAVIS ? ['Firefox'] : ['PhantomJS'],
+    browsers: process.env.TRAVIS ? ['Chrome'] : ['PhantomJS'],
 
     // customLaunchers: {
     //   Chrome_travis_ci: {
