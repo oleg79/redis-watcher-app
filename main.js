@@ -49,8 +49,9 @@ app.on('activate', () => {
   }
 });
 
-ipcMain.on('test.ping', (event, key) => {
-  redisClient.getAsync(key).then((val) => {
-    event.sender.send('test.pong', val);
-  });
+const getValue = key =>
+  redisClient.getAsync(key);
+
+ipcMain.on('test.ping', async (event, key) => {
+  event.sender.send('test.pong', await getValue(key));
 });
