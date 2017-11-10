@@ -8,7 +8,7 @@
   "scripts": {
     "dev-vue": "cross-env NODE_ENV=development webpack --watch",
     "dev": "cross-env NODE_ENV=development electron .",
-    "test": "karma start karma.config.js",
+    "test": "karma start karma.config.js --browsers Firefox --single-run",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
