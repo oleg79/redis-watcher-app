@@ -13,7 +13,7 @@ module.exports = (config) => {
     preprocessors: {
       // Process all *test* modules with webpack
       // (it will handle dependencies)
-      'src/**/*.test.ts': ['webpack', 'sourcemap'],
+      'src/**/*.test.ts': ['webpack', 'sourcemap']
     },
 
     // Webpack config
