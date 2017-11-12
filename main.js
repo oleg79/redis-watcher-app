@@ -43,8 +43,10 @@ app.on('activate', () => {
   }
 });
 
-ipcMain.on('process:ui.ready', (event) => {
+ipcMain.on('process:ui.ready', async (event) => {
   redisClient = new Redis(event.sender);
+  const data = await redisClient.getDatabases();
+  event.sender.send('received:databases.info', data);
 });
 
 // ipcMain.on('test.ping', async (event, key) => {
