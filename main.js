@@ -1,11 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const url = require('url');
-const redis = require('redis');
-const bluebird = require('bluebird');
-
-bluebird.promisifyAll(redis.RedisClient.prototype);
-bluebird.promisifyAll(redis.Multi.prototype);
+const Redis = require('./app/Redis');
 
 let mainWindow;
 let redisClient;
@@ -21,8 +17,6 @@ const createWindow = () => {
     protocol: 'file:',
     slashes: true
   }));
-
-  redisClient = redis.createClient();
 
   mainWindow.webContents.openDevTools();
 
@@ -49,9 +43,10 @@ app.on('activate', () => {
   }
 });
 
-const getValue = key =>
-  redisClient.getAsync(key);
-
-ipcMain.on('test.ping', async (event, key) => {
-  event.sender.send('test.pong', await getValue(key));
+ipcMain.on('process:ui.ready', (event) => {
+  redisClient = new Redis(event.sender);
 });
+
+// ipcMain.on('test.ping', async (event, key) => {
+//   // event.sender.send('test.pong', await getValue(key));
+// });

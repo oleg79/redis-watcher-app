@@ -15,9 +15,10 @@ export default class App extends Vue {
   mounted() {
 // TODO: work out how to declare Electron within typescript
 //    const { ipcRenderer } = this.$electron;
-    ipcRenderer.send('test.ping', 'lol')
-    ipcRenderer.on('test.pong', (event, arg: string) => {
-      this.name = arg;
+    ipcRenderer.send('process:ui.ready')
+    ipcRenderer.on('error:redis.client', (event: any, error: Object) => {
+      console.log(error);
+      alert('Connection error!');
     })
   }
 }
