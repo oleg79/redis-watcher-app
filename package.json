@@ -5,6 +5,10 @@
   "main": "main.js",
   "author": "oleg79 <0112oleg@gmail.com>",
   "license": "MIT",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/oleg79/redis-watcher-app.git"
+  },
   "scripts": {
     "dev-vue": "cross-env NODE_ENV=development webpack --watch",
     "dev": "cross-env NODE_ENV=development electron .",
