@@ -1,10 +1,12 @@
 /* eslint-disable */
 const path = require('path');
 const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-module.exports = {
+const vueSettings = {
+  name: 'js',
   target: 'electron',
-  entry: './src/main.js',
+  entry: ['./src/main.js', './src/assets/sass/index.sass'],
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
@@ -29,20 +31,8 @@ module.exports = {
         ]
       },
       {
-        test: /\.scss$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          'sass-loader'
-        ]
-      },
-      {
         test: /\.sass$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          'sass-loader?indentedSyntax'
-        ]
+        loader: ExtractTextPlugin.extract(['css-loader', 'sass-loader'])
       },
       {
         test: /\.vue$/,
@@ -98,9 +88,17 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development')
+    }),
+    new ExtractTextPlugin({
+      filename: '[name].bundle.css',
+      allChunks: true,
     })
   ]
 };
+
+module.exports = [
+  vueSettings
+];
 
 if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map';
