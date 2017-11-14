@@ -6,14 +6,14 @@ module.exports = (config) => {
     basePath: '',
     exclude: [],
     files: [
-      { pattern: 'src/**/*.test.ts', watch: false },
+      { pattern: 'src/**/*.test.js', watch: false }
     ],
 
     // Module processing
     preprocessors: {
       // Process all *test* modules with webpack
       // (it will handle dependencies)
-      'src/**/*.test.ts': ['webpack', 'sourcemap']
+      'src/**/*.test.js': ['webpack', 'sourcemap']
     },
 
     // Webpack config
