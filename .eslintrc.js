@@ -21,6 +21,7 @@ module.exports = {
   rules: {
     "no-debugger": process.env.NODE_ENV === 'production' ? 2 : 0,
     "indent-size": [true, 2],
-    "no-tabs": 1
+    "no-tabs": 1,
+    "no-new": 0
   }
 };

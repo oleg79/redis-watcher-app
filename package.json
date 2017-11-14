@@ -8,7 +8,7 @@
   "scripts": {
     "dev-vue": "cross-env NODE_ENV=development webpack --watch",
     "dev": "cross-env NODE_ENV=development electron .",
-    "test": "karma start karma.config.js --single-run",
+    "test": "karma start karma.config.js --browsers jsdom --single-run",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
@@ -51,10 +51,12 @@
     "file-loader": "^1.1.4",
     "flow-bin": "^0.59.0",
     "jasmine-core": "^2.8.0",
+    "jsdom": "^11.3.0",
     "karma": "^1.7.1",
     "karma-chrome-launcher": "^2.2.0",
     "karma-firefox-launcher": "^1.0.1",
     "karma-jasmine": "^1.1.0",
+    "karma-jsdom-launcher": "^6.1.2",
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^2.0.5",

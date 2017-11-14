@@ -1,4 +1,4 @@
-const webpackConfig = require('./webpack.config');
+const webpackConfig = require('./webpack.config')
 
 module.exports = (config) => {
   config.set({
@@ -19,19 +19,19 @@ module.exports = (config) => {
     // Webpack config
     webpack: webpackConfig,
     webpackMiddleware: {
-      stats: 'errors-only',
+      stats: 'errors-only'
     },
 
     // TODO: resolve browser travis issues
     // browsers: process.env.TRAVIS ? ['Chrome_travis_ci'] : ['PhantomJS'],
-    browsers: ['PhantomJS'],
+    browsers: ['jsdom'],
 
-    customLaunchers: {
-      Chrome_travis_ci: {
-        base: 'Chrome',
-        flags: ['--no-sandbox']
-      }
-    },
+    // customLaunchers: {
+    //   Chrome_travis_ci: {
+    //     base: 'Chrome',
+    //     flags: ['--no-sandbox']
+    //   }
+    // },
 
     // Reporters
     reporters: ['dots'],
@@ -46,5 +46,5 @@ module.exports = (config) => {
     autoWatch: true,
     singleRun: true,
     concurrency: Infinity
-  });
-};
+  })
+}
