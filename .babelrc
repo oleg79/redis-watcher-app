@@ -4,11 +4,14 @@
     "stage-0",
     "stage-3",
     "es2015",
-    "es2017"
+    "es2017",
+    "flow"
   ],
   "plugins": [
     "babel-plugin-transform-class-properties",
     "babel-plugin-syntax-flow",
-    "babel-plugin-transform-flow-strip-types"
+    "babel-plugin-transform-flow-strip-types",
+    "babel-plugin-transform-runtime",
+    "babel-plugin-transform-async-to-generator"
   ]
 }

@@ -1,6 +1,8 @@
 /** @flow */
 import type { IDBTransaction } from './IDBTransaction'
+import type { IDBIndexParameters } from './IDBIndexParameters'
 import type { IDBRequest } from './IDBRequest'
+import type { IDBIndex } from './IDBIndex'
 
 type Props = {
   indexNames: Array<string>, // DOMStringList
@@ -11,10 +13,10 @@ type Props = {
 }
 
 type Methods = {
-  add: () => IDBRequest,
+  add: (any, ?any) => IDBRequest,
   clear: () => IDBRequest,
   count: () => IDBRequest,
-  createIndex: () => any,
+  createIndex: (string, ?any, ?IDBIndexParameters) => IDBIndex,
   delete: () => IDBRequest,
   deleteIndex: Function,
   get: () => IDBRequest,
@@ -24,7 +26,7 @@ type Methods = {
   index: Function,
   openCursor: () => IDBRequest,
   openKeyCursor: () => IDBRequest,
-  put: () => IDBRequest
+  put: (any, ?any) => IDBRequest
 }
 
 export type IDBObjectStore = Props & Methods

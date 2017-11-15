@@ -17,7 +17,7 @@ type EventHandlers = {
 
 type Methods = {
   abort: Function,
-  objectStore: () => IDBObjectStore
+  objectStore: any => IDBObjectStore
 }
 
 export type IDBTransaction = Props & EventHandlers & EventTarget & Methods

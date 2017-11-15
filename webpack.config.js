@@ -7,7 +7,7 @@ const FlowWebpackPlugin = require('flow-webpack-plugin')
 const vueSettings = {
   name: 'js',
   target: 'electron',
-  entry: ['./src/main.js', './assets/sass/index.sass'],
+  entry: ['babel-polyfill', './src/main.js', './assets/sass/index.sass'],
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',

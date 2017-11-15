@@ -1,15 +1,15 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 const url = require('url')
-const Redis = require('./app/redis')
+const Redis = require('./lib/redis')
 
 let mainWindow
 let redisClient
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600
+    width: 1200,
+    height: 700
   })
 
   mainWindow.loadURL(url.format({
