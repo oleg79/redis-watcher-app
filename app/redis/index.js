@@ -41,7 +41,6 @@ class Redis {
     let output = []
     try {
       const raw = await this.client.infoAsync('keyspace')
-      // console.log(this.parseKeyspaceInfo(raw));
       output = Redis.parseKeyspaceInfo(raw)
     } catch (e) {
       // console.log(e);

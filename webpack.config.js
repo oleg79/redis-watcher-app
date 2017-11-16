@@ -7,11 +7,20 @@ const FlowWebpackPlugin = require('flow-webpack-plugin')
 const vueSettings = {
   name: 'js',
   target: 'electron',
-  entry: ['babel-polyfill', './src/main.js', './assets/sass/index.sass'],
+  entry: ['babel-polyfill', 'materialize-css', './src/main.js', './assets/sass/index.sass'],
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
     filename: 'build.js'
+  },
+  resolve: {
+    alias: {
+      'materialize-css': 'node_modules/materialize-css/dist/js/materialize.min.js'
+    },
+    modules: [
+      path.resolve('./'),
+      path.resolve('./node_modules'),
+    ]
   },
   module: {
     rules: [

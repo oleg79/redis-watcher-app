@@ -19,6 +19,7 @@
   "dependencies": {
     "bluebird": "^3.5.1",
     "electron": "^1.7.9",
+    "materialize-css": "^1.0.0-alpha.1",
     "redis": "^2.8.0",
     "vue": "^2.5.3",
     "vue-electron": "^1.0.6"
