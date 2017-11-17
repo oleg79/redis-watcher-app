@@ -9,7 +9,8 @@ let redisClient
 const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 1200,
-    height: 700
+    height: 700,
+    icon: path.join(__dirname, 'assets/icons/png/64x64.png')
   })
 
   mainWindow.loadURL(url.format({

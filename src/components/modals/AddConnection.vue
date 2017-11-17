@@ -1,5 +1,9 @@
 <template>
-  <modal name="no-saved-connections" class="add-connection">
+  <modal
+    name="no-saved-connections"
+    class="add-connection"
+    :clickToClose="false"
+  >
     <div class="modal-content">
       <div class="row">
         <form class="col s12">
@@ -60,7 +64,7 @@
 
 <script>
   import * as configs from '../../../configs'
-  import Database from '../../services/database'
+  import Database from '../../services/indexedDB'
   import { eventBus } from '../../main'
 
   export default {

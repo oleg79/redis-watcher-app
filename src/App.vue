@@ -2,7 +2,7 @@
   <div class="top-container">
     <div
       class="main-container"
-      :class="{ 'blur-overlay': savedConnections === 0 }"
+      :class="{ 'blur-overlay': noSavedConnections }"
     >
       <div class="navbar-fixed">
         <nav>
@@ -25,7 +25,7 @@
     </div>
 
     <addConnection
-      :shouldOpen="savedConnections === 0"
+      :shouldOpen="noSavedConnections"
     />
   </div>
 </template>
@@ -35,7 +35,7 @@
 import * as configs from '../configs'
 import { REDIS_CONNECTION_ERROR, REDIS_CONNECTION_SUCCESS } from '../channels_constants'
 import { Data } from './App.types'
-import Database from './services/database'
+import Database from './services/indexedDB'
 import { eventBus } from './main'
 // Components
 import AddConnection from './components/modals/AddConnection.vue'
@@ -56,7 +56,11 @@ export default {
     }
   },
 
-
+  computed: {
+    noSavedConnections () {
+      return this.savedConnections === 0
+    }
+  },
 
   // lifecycle
   created() {
