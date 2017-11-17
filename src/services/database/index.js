@@ -15,7 +15,7 @@ const HOST_PORT_INDEX = 'HostPortIndex'
 
 type ConnectionFields = {
   host: string,
-  port: number,
+  port: string|number,
   protocol:? string,
   password:? string
 }

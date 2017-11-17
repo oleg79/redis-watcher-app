@@ -1,11 +1,11 @@
 /* eslint-disable */
-const path = require('path');
-const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require('path')
+const webpack = require('webpack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const FlowWebpackPlugin = require('flow-webpack-plugin')
 
-const vueSettings = {
-  name: 'js',
+const electronVueSettings = {
+  name: 'electron',
   target: 'electron',
   entry: ['babel-polyfill', 'materialize-css', './src/main.js', './assets/sass/index.sass'],
   output: {
@@ -13,15 +13,15 @@ const vueSettings = {
     publicPath: '/dist/',
     filename: 'build.js'
   },
-  resolve: {
-    alias: {
-      'materialize-css': 'node_modules/materialize-css/dist/js/materialize.min.js'
-    },
-    modules: [
-      path.resolve('./'),
-      path.resolve('./node_modules'),
-    ]
-  },
+  // resolve: {
+  //   alias: {
+  //     'materialize-css': 'node_modules/materialize-css/dist/js/materialize.min.js'
+  //   },
+  //   modules: [
+  //     path.resolve('./'),
+  //     path.resolve('./node_modules'),
+  //   ]
+  // },
   module: {
     rules: [
       {
@@ -107,8 +107,9 @@ const vueSettings = {
   ]
 };
 
+
 module.exports = [
-  vueSettings
+  electronVueSettings
 ];
 
 if (process.env.NODE_ENV === 'production') {
