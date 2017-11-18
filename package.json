@@ -12,7 +12,6 @@
   "scripts": {
     "vue": "cross-env NODE_ENV=development webpack --watch",
     "app": "yarn flow:build && cross-env NODE_ENV=development  electron .",
-    "test": "karma start karma.config.js --browsers jsdom --single-run",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "flow:build": "flow-remove-types ./app/ -d ./lib/ --all --pretty"
   },
@@ -32,7 +31,6 @@
     "not ie <= 8"
   ],
   "devDependencies": {
-    "@types/jasmine": "^2.6.3",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.2",
     "babel-loader": "^7.1.2",
@@ -68,19 +66,6 @@
     "flow-bin": "^0.59.0",
     "flow-remove-types": "^1.2.3",
     "flow-webpack-plugin": "^1.2.0",
-    "jasmine-core": "^2.8.0",
-    "jsdom": "^11.3.0",
-    "jsdom-global": "^3.0.2",
-    "karma": "^1.7.1",
-    "karma-chrome-launcher": "^2.2.0",
-    "karma-firefox-launcher": "^1.0.1",
-    "karma-jasmine": "^1.1.0",
-    "karma-jsdom-launcher": "^6.1.2",
-    "karma-phantomjs-launcher": "^1.0.4",
-    "karma-sourcemap-loader": "^0.3.7",
-    "karma-webpack": "^2.0.5",
-    "mocha": "^4.0.1",
-    "mocha-webpack": "^1.0.1",
     "node-sass": "^4.5.3",
     "remove-flow-types-loader": "^1.1.0",
     "sass-loader": "^6.0.6",
@@ -88,10 +73,10 @@
     "transform-runtime": "0.0.0",
     "vue-loader": "^13.0.5",
     "vue-template-compiler": "^2.4.4",
-    "vue-test-utils": "^1.0.0-beta.5",
     "webpack": "^3.6.0",
     "webpack-node-externals": "^1.6.0",
-    "webpack-target-electron-renderer": "^0.4.0"
+    "webpack-target-electron-renderer": "^0.4.0",
+    "window": "^4.2.2"
   },
   "keywords": [
     "electron",

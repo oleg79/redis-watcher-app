@@ -3,11 +3,13 @@ const path = require('path')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const FlowWebpackPlugin = require('flow-webpack-plugin')
+// const nodeExternals = require('webpack-node-externals')
 
 const electronVueSettings = {
   name: 'electron',
   target: 'electron',
   entry: ['babel-polyfill', 'materialize-css', './src/main.js', './assets/sass/index.sass'],
+  // externals: [nodeExternals()],
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
@@ -94,7 +96,7 @@ const electronVueSettings = {
   performance: {
     hints: false
   },
-  devtool: '#eval-source-map',
+  devtool: 'inline-cheap-module-source-map',
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development')
@@ -108,9 +110,14 @@ const electronVueSettings = {
 };
 
 
-module.exports = [
-  electronVueSettings
-];
+module.exports = electronVueSettings;
+
+if (process.env.NODE_ENV === 'test') {
+  // exclude NPM deps from test bundle
+  module.exports.externals = [require('webpack-node-externals')()]
+  // use inline source map so that it works with mocha-webpack
+  module.exports.devtool = 'inline-cheap-module-source-map'
+}
 
 if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map';
