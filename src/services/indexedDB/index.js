@@ -48,12 +48,12 @@ export default class Database {
     })
   }
 
-  async getConnectionsCount () {
+  async getConnections () {
     const database: IDBDatabase = await this.request
 
     const transaction: IDBTransaction = database.transaction([CONNECTIONS_TABLE], READ_ONLY)
     const objectStore: IDBObjectStore = transaction.objectStore(CONNECTIONS_TABLE)
-    const countRequest: IDBRequest = objectStore.count()
+    const countRequest: IDBRequest = objectStore.getAll()
 
     return new Promise((resolve, reject) => {
       countRequest.onsuccess = (event) => { resolve(event.target.result) }

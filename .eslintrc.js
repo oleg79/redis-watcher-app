@@ -23,6 +23,8 @@ module.exports = {
     "no-debugger": process.env.NODE_ENV === 'production' ? 2 : 0,
     "indent-size": [true, 2],
     "no-tabs": 1,
-    "no-new": 0
+    "no-new": 0,
+    "class-methods-use-this": 0,
+    "no-param-reassign": 0
   }
 };

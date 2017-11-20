@@ -1,4 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
+// const { unserialize } = require('php-serialization')
+const phpUnserialize = require('phpunserialize')
 const path = require('path')
 const url = require('url')
 const Redis = require('./lib/redis')
@@ -19,7 +21,7 @@ const createWindow = () => {
     slashes: true
   }))
 
-  mainWindow.webContents.openDevTools()
+  // mainWindow.webContents.openDevTools()
 
   mainWindow.on('closed', () => {
     if (process.platform !== 'darwin') {
@@ -48,16 +50,23 @@ ipcMain.on('app.exit', () => {
   mainWindow.close()
 })
 
-ipcMain.on('process:ui.ready', async (event) => {
-  redisClient = new Redis(event.sender)
-  const data = await redisClient.getDatabases()
-  event.sender.send('received:databases.info', data)
+ipcMain.on('connection:try.establish', async (event, connectionOptions) => {
+  redisClient = new Redis(connectionOptions, event.sender)
+
+  const databases = await redisClient.getDatabases()
+  event.sender.send('redis.databases:info', databases)
 })
 
-ipcMain.on('connection:establish', (event, data) => {
-  console.info(data)
+ipcMain.on('redis.database:select', async (event, databaseName) => {
+  const keys = await redisClient.getKeys(databaseName)
+  event.sender.send('redis.database:selected', keys)
 })
 
-// ipcMain.on('test.ping', async (event, key) => {
-//   // event.sender.send('test.pong', await getValue(key));
-// });
+ipcMain.on('redis.key:get.value', async (event, key) => {
+  try {
+    const value = await redisClient.getSetValue(key)
+    event.sender.send('redis.key:receive.value', phpUnserialize(value))
+  } catch (e) {
+    console.log(e)
+  }
+})

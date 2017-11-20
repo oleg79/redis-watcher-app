@@ -1,73 +1,64 @@
 <template>
-  <modal
-    name="no-saved-connections"
-    class="add-connection"
-    :clickToClose="false"
-  >
-    <div class="modal-content">
-      <div class="row">
-        <form class="col s12">
-          <div class="row add-connection-row">
-            <div class="input-field col s6 offset-s3">
-              <input
-                id="redis_host"
-                type="text"
-                class="validate"
-                v-model="newConnection.host"
-              >
-              <label class="active" for="redis_host">Host</label>
-            </div>
-          </div>
+  <b-form @submit="addConnection">
+    <b-form-group
+      id="redis_host_group"
+      label="Host:"
+      label-for="redis_host"
+      description="Please, specify Redis host"
+    >
+      <b-form-input
+        id="redis_host"
+        type="text"
+        v-model="newConnection.host"
+        required
+        placeholder="Enter host"
+      ></b-form-input>
+    </b-form-group>
 
-          <div class="row add-connection-row">
-            <div class="input-field col s6 offset-s3">
-              <input
-                id="redis_port"
-                type="text"
-                class="validate"
-                v-model="newConnection.port"
-              >
-              <label class="active" for="redis_port">Port</label>
-            </div>
-          </div>
+    <b-form-group
+      id="redis_port_group"
+      label="Port:"
+      label-for="redis_port"
+      description="Please, specify Redis port"
+    >
+      <b-form-input
+        id="redis_port"
+        type="text"
+        v-model="newConnection.port"
+        required
+        placeholder="Enter port"
+      ></b-form-input>
+    </b-form-group>
 
-          <div class="row add-connection-row">
-            <div class="input-field col s6 offset-s3">
-              <input
-                id="redis_password"
-                type="password"
-                class="validate"
-                v-model="newConnection.password"
-              >
-              <label class="active" for="redis_password">Password</label>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <div class="row add-connection-row">
-        <div class="col s6 offset-s3 center-align">
-          <a
-            class="waves-effect waves-light btn"
-            @click="addConnection"
-          >add</a>
-          <a
-            class="waves-effect waves-light btn red"
-            @click="exitApp"
-          >exit</a>
-        </div>
-      </div>
-    </div>
-  </modal>
+    <b-form-group
+      id="redis_pass_group"
+      label="Password:"
+      label-for="redis_pass"
+      description="Please, enter password if required"
+    >
+      <b-form-input
+        id="redis_pass"
+        type="password"
+        v-model="newConnection.password"
+        placeholder="Enter password"
+      ></b-form-input>
+    </b-form-group>
+
+    <b-button type="submit" variant="outline-primary">add connection</b-button>
+    <b-button variant="outline-danger">exit</b-button>
+  </b-form>
 </template>
 
 <script>
   import * as configs from '../../../configs'
   import Database from '../../services/indexedDB'
+
   import { eventBus } from '../../main'
+  import { sanitizeOptionsObject } from '../../helpers/sanitize'
+  import mixin from './mixin'
 
   export default {
+    mixins: [mixin],
     data() {
       return {
         newConnection: {
@@ -78,30 +69,34 @@
         database: null
       }
     },
+
     methods: {
-      exitApp() {
-        this.$electron.ipcRenderer.send('app.exit')
-      },
       addConnection() {
-        // TODO: add validation
-        this.database.addConnection(this.newConnection)
-          .then(() => {
-            this.$modal.hide('no-saved-connections')
-            this.$electron.ipcRenderer.send('connection:establish', this.newConnection)
-            eventBus.$emit('connection:established')
-          })
-          .catch(e => console.log(e))
+
+        if (this.newConnection.host && this.newConnection.port) {
+
+          const sanitizedOptions = sanitizeOptionsObject(this.newConnection)
+
+          this.database.addConnection(sanitizedOptions)
+            .then(() => {
+
+
+            })
+            .catch(e => console.log(e))
+        }
+
       }
     },
+
     created() {
-      eventBus.$once('no-saved-connections', () => {
-        this.database = new Database(configs.localDatabaseName, 1)
-        this.$modal.show('no-saved-connections')
-      })
+      this.database = new Database(configs.localDatabaseName, 1)
     }
   }
 </script>
 
 <style lang="sass">
-
+  .alert-danger
+    background: rgba(255, 126, 126, 0.63)
+    color: #ec2828
+    font-weight: bold
 </style>

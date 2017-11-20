@@ -14,9 +14,9 @@ class Redis {
   ipcRenderer:Object
   client: any
 
-  constructor (ipcRenderer: Object, options:Array<string> = []) {
-    this.ipcRenderer = ipcRenderer
+  constructor (options:Object = {}, ipcRenderer: Object) {
     this.client = redis.createClient(options)
+    this.ipcRenderer = ipcRenderer
 
     this.client.on('error', this.handleClientError.bind(this))
     this.client.on('connect', this.handleClientConnect.bind(this))
@@ -32,10 +32,6 @@ class Redis {
     this.ipcRenderer.send(REDIS_CONNECTION_SUCCESS)
   }
 
-  async get (key:string) {
-    return this.client.getAsync(key)
-  }
-
   // async methods
   async getDatabases () {
     let output = []
@@ -46,6 +42,28 @@ class Redis {
       // console.log(e);
     }
     return output
+  }
+
+  async getKeys (databaseName:string) {
+    try {
+      const status = await this.client.selectAsync(Redis.getDbNumberFromName(databaseName))
+      if (status === 'OK') {
+        const keys = await this.client.keysAsync('*')
+        return keys
+      }
+      return []
+    } catch (e) {
+      return []
+    }
+  }
+
+  async getSetValue (key:string) {
+    try {
+      const value = this.client.getAsync(key)
+      return value
+    } catch (e) {
+      return null
+    }
   }
 
   // static methods
@@ -63,6 +81,10 @@ class Redis {
       acc[key] = val
       return acc
     }, {})
+  }
+
+  static getDbNumberFromName (name:string): number {
+    return Number(name.substr(2))
   }
 }
 

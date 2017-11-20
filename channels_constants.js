@@ -1,4 +1,4 @@
 module.exports = {
-  REDIS_CONNECTION_ERROR: 'redis.client.error',
-  REDIS_CONNECTION_SUCCESS: 'redis.client.success'
+  REDIS_CONNECTION_ERROR: 'redis:connection.error',
+  REDIS_CONNECTION_SUCCESS: 'redis:connection.success'
 }
