@@ -1,6 +1,6 @@
 <template>
   <div>
-    <span class="badge badge-danger">{{ propertyName }}:</span>
+    <span class="badge badge-danger">{{ propertyName | safeKey(' - ')  }}:</span>
     <span class="badge badge-primary">Object:</span>
     <ul>
       <li
@@ -19,9 +19,12 @@
 
 <script>
   import ValueResolver from './ValueResolver.vue'
+  import mixin from './mixin'
 
   export default {
     props: ['value', 'propertyName'],
+
+    mixins: [mixin],
 
     data() {
       return {

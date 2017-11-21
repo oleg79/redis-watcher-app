@@ -25,6 +25,8 @@ module.exports = {
     "no-tabs": 1,
     "no-new": 0,
     "class-methods-use-this": 0,
-    "no-param-reassign": 0
+    "no-param-reassign": 0,
+    "no-confusing-arrow": 0,
+    "comma-dangle": 0
   }
 };

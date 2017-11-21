@@ -16,6 +16,7 @@
 
   export default {
     props: ['value', 'propertyName'],
+
     computed: {
       valueComponent() {
         switch ( ({}).toString.call(this.value).match(/\s([a-zA-Z]+)/)[1].toLowerCase() ) {
