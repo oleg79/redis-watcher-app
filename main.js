@@ -21,7 +21,7 @@ const createWindow = () => {
     slashes: true
   }))
 
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   mainWindow.on('closed', () => {
     if (process.platform !== 'darwin') {
@@ -67,6 +67,6 @@ ipcMain.on('redis.key:get.value', async (event, key) => {
     const value = await redisClient.getSetValue(key)
     event.sender.send('redis.key:receive.value', phpUnserialize(value))
   } catch (e) {
-    console.log(e)
+    //
   }
 })
