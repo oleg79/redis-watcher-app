@@ -8,11 +8,11 @@
       <div class="col-12">
         <div class="row">
           <div class="col-6">
-            <KeysList/>
+            <KeysList class="r-list"/>
           </div>
 
           <div class="col-6">
-            <ValueEditor/>
+            <ValueEditor class="r-list"/>
           </div>
         </div>
       </div>
@@ -43,5 +43,12 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+  .container-fluid
+    padding: 0
 
+  .r-list
+    height: 720px
+    overflow-x: hidden
+    overflow-y: auto
+    background: #fff
 </style>

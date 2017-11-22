@@ -4,7 +4,7 @@
       class="value-container"
       v-if="view === 'read'"
       @mouseenter="showControls = true"
-      @mouseleave="showControls = false"
+      @mouseleave="showControls = true"
     >
       <div class="value-info">
         <b-badge variant="danger">{{ propertyName | safeKey(' - ') }}:</b-badge>
@@ -15,8 +15,29 @@
         class="value-controls"
         v-if="showControls"
       >
-        <span @click="view = 'edit'">edit</span>
-        <span>delete</span>
+        <button
+          class="r-btn edit"
+          v-b-tooltip.hover
+          title="edit"
+          @click="view = 'edit'"
+        >
+          <icon
+            name="pencil"
+            scale="1.5"
+          ></icon>
+        </button>
+
+        <button
+          class="r-btn delete"
+          v-b-tooltip.hover
+          title="delete"
+          @click="showDeleteModal"
+        >
+          <icon
+            name="trash"
+            scale="1.5"
+          ></icon>
+        </button>
       </div>
     </div>
 
@@ -36,6 +57,35 @@
         <span>cancel</span>
       </div>
     </div>
+
+    <b-modal
+      ref="deleteModal"
+      hide-footer
+      no-close-on-backdrop
+      no-close-on-esc
+    >
+      <div>
+        <b-alert show variant="warning">Are you sure?</b-alert>
+        <div>
+          {{ pathAsString }} : {{ value }}
+        </div>
+        <div>
+          <b-button
+            variant="danger"
+            @click="deleteValue"
+          >
+            delete
+          </b-button>
+
+          <b-button
+            variant="primary"
+            @click="closeDeleteModal"
+          >
+            cancel
+          </b-button>
+        </div>
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -51,21 +101,33 @@
     data() {
       return {
         selfValue: this.value,
-        showControls: false,
+        showControls: true,
         view: 'read'
       }
     },
 
     computed: {
-      ...mapState(['currentKey', 'keyValue'])
+      ...mapState(['currentKey', 'keyValue']),
+
+      pathAsString() {
+        return this.valuePath.join('.')
+      }
     },
 
     methods: {
-      ...mapMutations(['updateKeyValue']),
+      ...mapMutations(['updateKeyValue', 'deleteKeyValue']),
+
+      showDeleteModal() {
+        this.$refs.deleteModal.show()
+      },
+
+      closeDeleteModal() {
+        this.$refs.deleteModal.hide()
+      },
 
       saveValue() {
         this.updateKeyValue({
-          path: this.valuePath.join('.'),
+          path: this.pathAsString,
           value: this.selfValue
         })
 
@@ -75,6 +137,17 @@
           key: this.currentKey,
           value: this.keyValue
         })
+      },
+
+      deleteValue() {
+        this.deleteKeyValue(this.pathAsString)
+
+        this.$electron.ipcRenderer.send('redis.key:update', {
+          key: this.currentKey,
+          value: this.keyValue
+        })
+
+        this.$refs.deleteModal.hide()
       }
     },
 
@@ -82,17 +155,28 @@
 </script>
 
 <style lang="sass">
+  @mixin rect($val)
+    width: $val
+    height: $val
+
   .value
     &-container
       overflow: hidden
+      padding: 2px
+      line-height: 29px
+
+      &:hover
+        background: #bdbdbd
 
     &-info
       float: left
-      width: 75%
+      width: auto
+      margin-right: 0
 
     &-controls
-      float: right
-      width: 25%
+      float: left
+      width: auto
+      margin-left: 15px
 
     &-editor
       overflow: hidden
@@ -105,4 +189,18 @@
         &-actions
           width: 50%
           float: right
+
+  .r-btn
+    @include rect(33px)
+    outline: none
+    border: none
+    background: none
+    padding: 3px 0 0 0
+    cursor: pointer
+
+    .delete
+      margin-left: 10px
+
+  .badge
+    font-size: 14px
 </style>

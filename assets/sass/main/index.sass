@@ -1,12 +1,14 @@
 html, body
-  background-color: $backgroud-main
   @include rect(100%)
+  background-color: $backgroud-main
+  overflow-x: hidden
 
+*
   &::-webkit-scrollbar
     width: 7px
 
   &::-webkit-scrollbar-track
-    background: lighten($backgroud-main, 2.5)
+    background: lighten($backgroud-main, 9)
 
   &::-webkit-scrollbar-thumb
     background: darken($backgroud-main, 2.5)

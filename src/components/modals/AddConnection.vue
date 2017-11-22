@@ -1,5 +1,5 @@
 <template>
-  <b-form @submit="addConnection">
+  <b-form @submit="addConnection" name="add_connection" novalidate>
     <b-form-group
       id="redis_host_group"
       label="Host:"
@@ -34,17 +34,17 @@
       <b-link v-b-toggle.additional_settings variant="primary">Additional Settings</b-link>
       <b-collapse id="additional_settings" class="mt-2">
         <b-form-group
-          id="redis_port_group"
-          label="Port:"
-          label-for="redis_port"
-          description="Please, specify Redis port"
+          id="redis_pass_group"
+          label="Password:"
+          label-for="redis_pass"
+          description="Please, specify Redis password"
         >
           <b-form-input
-            id="redis_port"
-            type="text"
-            v-model="newConnection.port"
+            id="redis_pass"
+            type="password"
+            v-model="newConnection.password"
             required
-            placeholder="Enter port"
+            placeholder="Enter password"
           ></b-form-input>
         </b-form-group>
       </b-collapse>

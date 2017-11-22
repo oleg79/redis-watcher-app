@@ -26,6 +26,12 @@
           </div>
         </b-dropdown-item>
       </b-nav-item-dropdown>
+
+
+      <b-nav-text>
+        <b-badge variant="primary">CURRENT KEY :</b-badge>
+        <b-badge variant="light">{{ currentKey }}</b-badge>
+      </b-nav-text>
     </b-nav>
   </b-navbar>
 </template>
@@ -42,6 +48,7 @@
 
     computed: {
       ...mapState([
+        'currentKey',
         'connected',
         'databases',
         'redisConnections'

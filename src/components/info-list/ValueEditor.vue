@@ -1,12 +1,5 @@
 <template>
-  <!--<tree-view-->
-    <!--v-if="keyValue"-->
-    <!--:data="keyValue"-->
-    <!--:options="{maxDepth: 7}"-->
-    <!--style="background: #fff"-->
-  <!--&gt;-->
-  <!--</tree-view>-->
-  <div class="hierarchy" style="background: #fff">
+  <div class="hierarchy" style="background: #fff" v-if="keyValue">
     <ValueResolver
       :value="keyValue"
     />

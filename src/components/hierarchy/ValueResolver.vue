@@ -52,7 +52,7 @@
 <style lang="sass">
   ul
     list-style: none
-    padding: 5px 15px
+    padding: 15px 0 10px 15px
 
   .closed
     height: 0

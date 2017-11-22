@@ -1,5 +1,5 @@
 /* eslint-disable */
-const { app, BrowserWindow, ipcMain } = require('electron')
+const electron = require('electron')
 const { serialize } = require('php-serialize')
 const phpUnserialize = require('phpunserialize')
 const { Base64 } = require('js-base64')
@@ -10,13 +10,18 @@ const path = require('path')
 const url = require('url')
 const Redis = require('./lib/redis')
 
+const { app, BrowserWindow, ipcMain } = electron
+
 let mainWindow
 let redisClient
 
 const createWindow = () => {
+  const {width, height} = electron.screen.getPrimaryDisplay().workAreaSize
   mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 700,
+    width,
+    height,
+    minWidth: 1200,
+    minHeight: 700,
     icon: path.join(__dirname, 'assets/icons/png/64x64.png')
   })
 
@@ -93,7 +98,6 @@ ipcMain.on('redis.key:get.value', async (event, key) => {
   if (parsedValue === null) {
     try {
       const output = zlib.createGunzip()
-      fs
     } catch (e) {
       parsedValue = null
     }

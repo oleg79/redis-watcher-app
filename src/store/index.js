@@ -76,6 +76,10 @@ export default new Vuex.Store({
 
     updateKeyValue: (state:Object, { path, value }:Object) => {
       state.keyValue = _.set(_.cloneDeep(state.keyValue), path, value)
+    },
+
+    deleteKeyValue: (state:Object, path:string) => {
+      state.keyValue = _.omit(state.keyValue, path)
     }
   },
 
