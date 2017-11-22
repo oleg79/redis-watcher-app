@@ -4,6 +4,7 @@
       :is="valueComponent"
       :value="value"
       :propertyName="propertyName"
+      :valuePath="valuePath"
     ></component>
   </div>
 
@@ -15,7 +16,7 @@
   import ObjectValue from './ObjectValue.vue'
 
   export default {
-    props: ['value', 'propertyName'],
+    props: ['value', 'propertyName', 'pathChunk'],
 
     computed: {
       valueComponent() {
@@ -24,6 +25,16 @@
           case 'array': return 'ArrayValue';
           default: return 'ScalarValue';
         }
+      },
+
+      valuePath() {
+        if (undefined === this.pathChunk) {
+          return []
+        }
+        else if (Array.isArray(this.pathChunk)) {
+          return this.pathChunk.concat(this.propertyName)
+        }
+        return [ this.propertyName ]
       }
     },
 
@@ -34,6 +45,7 @@
         ObjectValue
       }
     },
+
   }
 </script>
 

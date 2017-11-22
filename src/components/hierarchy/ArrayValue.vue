@@ -11,6 +11,7 @@
         <ValueResolver
           :value="val"
           :propertyName="index"
+          :pathChunk="valuePath"
         />
       </li>
     </ul>
@@ -24,7 +25,7 @@
   import mixin from './mixin'
 
   export default {
-    props: ['value', 'propertyName'],
+    props: ['value', 'propertyName', 'valuePath'],
     mixins: [mixin],
 
     data() {

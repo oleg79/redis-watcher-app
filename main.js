@@ -1,6 +1,11 @@
+/* eslint-disable */
 const { app, BrowserWindow, ipcMain } = require('electron')
-// const { unserialize } = require('php-serialization')
+const { serialize } = require('php-serialize')
 const phpUnserialize = require('phpunserialize')
+const { Base64 } = require('js-base64')
+const zlib = require('zlib')
+const fs = require('fs')
+const { Writable, Readable, Stream } = require('stream')
 const path = require('path')
 const url = require('url')
 const Redis = require('./lib/redis')
@@ -63,9 +68,44 @@ ipcMain.on('redis.database:select', async (event, databaseName) => {
 })
 
 ipcMain.on('redis.key:get.value', async (event, key) => {
+  let rawValue
+  let parsedValue
   try {
-    const value = await redisClient.getSetValue(key)
-    event.sender.send('redis.key:receive.value', phpUnserialize(value))
+    rawValue = await redisClient.getSetValue(key)
+  } catch (e) {
+    rawValue = null
+  }
+
+  try {
+    parsedValue = JSON.parse(rawValue)
+  } catch (e) {
+    parsedValue = null
+  }
+
+  if (parsedValue === null) {
+    try {
+      parsedValue = phpUnserialize(rawValue)
+    } catch (e) {
+      parsedValue = null
+    }
+  }
+
+  if (parsedValue === null) {
+    try {
+      const output = zlib.createGunzip()
+      fs
+    } catch (e) {
+      parsedValue = null
+    }
+  }
+
+  event.sender.send('redis.key:receive.value', parsedValue)
+})
+
+ipcMain.on('redis.key:update', async (event, { key, value }) => {
+  try {
+    const result = await redisClient.setValue(key, serialize(value))
+    console.log(result)
   } catch (e) {
     //
   }

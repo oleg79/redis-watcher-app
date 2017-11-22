@@ -11,14 +11,16 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+  import { mapState, mapMutations } from 'vuex'
   export default {
     computed: {
       ...mapState(['keysSet'])
     },
 
     methods: {
+      ...mapMutations(['setKey']),
       getKeyValue(key) {
+        this.setKey(key)
         this.$electron.ipcRenderer.send('redis.key:get.value', key)
       }
     }

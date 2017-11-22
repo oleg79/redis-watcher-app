@@ -3,6 +3,8 @@
 import Vue from 'vue'
 // $FlowFixMe
 import Vuex from 'vuex'
+// $FlowFixMe
+import _ from 'lodash'
 import LocalStorage from '../services/localStorage'
 import defaultSettings from '../../default_settings'
 
@@ -19,6 +21,7 @@ export default new Vuex.Store({
     databases: [],
     currentDatabase: null,
     keysSet: [],
+    currentKey: null,
     keyValue: null,
     redisError: null,
     connected: false
@@ -63,8 +66,16 @@ export default new Vuex.Store({
       state.keysSet = payload
     },
 
+    setKey: (state:Object, payload: Array<string>) => {
+      state.currentKey = payload
+    },
+
     setKeyValue: (state:Object, payload:any) => {
       state.keyValue = payload
+    },
+
+    updateKeyValue: (state:Object, { path, value }:Object) => {
+      state.keyValue = _.set(_.cloneDeep(state.keyValue), path, value)
     }
   },
 

@@ -66,6 +66,15 @@ class Redis {
     }
   }
 
+  async setValue (key:string, value:any) {
+    try {
+      const result = this.client.setAsync(key, value)
+      return result
+    } catch (e) {
+      return null
+    }
+  }
+
   // static methods
   static parseKeyspaceInfo (raw:string) {
     return raw.split(os.EOL).splice(1)
