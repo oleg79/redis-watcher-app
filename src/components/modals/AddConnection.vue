@@ -30,19 +30,25 @@
       ></b-form-input>
     </b-form-group>
 
-    <b-form-group
-      id="redis_pass_group"
-      label="Password:"
-      label-for="redis_pass"
-      description="Please, enter password if required"
-    >
-      <b-form-input
-        id="redis_pass"
-        type="password"
-        v-model="newConnection.password"
-        placeholder="Enter password"
-      ></b-form-input>
-    </b-form-group>
+    <div>
+      <b-link v-b-toggle.additional_settings variant="primary">Additional Settings</b-link>
+      <b-collapse id="additional_settings" class="mt-2">
+        <b-form-group
+          id="redis_port_group"
+          label="Port:"
+          label-for="redis_port"
+          description="Please, specify Redis port"
+        >
+          <b-form-input
+            id="redis_port"
+            type="text"
+            v-model="newConnection.port"
+            required
+            placeholder="Enter port"
+          ></b-form-input>
+        </b-form-group>
+      </b-collapse>
+    </div>
 
     <b-button type="submit" variant="outline-primary">add connection</b-button>
     <b-button variant="outline-danger">exit</b-button>
