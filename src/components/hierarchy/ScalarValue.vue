@@ -4,7 +4,7 @@
       class="value-container"
       v-if="view === 'read'"
       @mouseenter="showControls = true"
-      @mouseleave="showControls = true"
+      @mouseleave="showControls = false"
     >
       <div class="value-info">
         <b-badge variant="danger">{{ propertyName | safeKey(' - ') }}:</b-badge>
@@ -19,7 +19,7 @@
           class="r-btn edit"
           v-b-tooltip.hover
           title="edit"
-          @click="view = 'edit'"
+          @click="switchToEditMode"
         >
           <icon
             name="pencil"
@@ -42,19 +42,45 @@
     </div>
 
     <div
-      v-if="view === 'edit'"
+      v-show="view === 'edit'"
       class="value-editor"
     >
       <div class="editing">
-        <input
-          type="text"
-          class="form-control"
-          v-model="selfValue"
-        />
+        <div class="value-info">
+          <b-badge variant="danger">{{ propertyName | safeKey(' - ') }}:</b-badge>
+          <b-badge variant="primary">{{ typeof value }}:</b-badge>
+          <input
+            type="text"
+            ref="valueEditor"
+            class="form-control r-edit-input"
+            v-model="selfValue"
+          />
+        </div>
       </div>
       <div class="editing-actions">
-        <span @click="saveValue">save</span>
-        <span>cancel</span>
+        <button
+          class="r-btn save"
+          v-b-tooltip.hover
+          title="save"
+          @click="saveValue"
+        >
+          <icon
+            name="floppy-o"
+            scale="1.5"
+          ></icon>
+        </button>
+
+        <button
+          class="r-btn cancel"
+          v-b-tooltip.hover
+          title="cancel"
+          @click="view = 'read'"
+        >
+          <icon
+            name="ban"
+            scale="1.5"
+          ></icon>
+        </button>
       </div>
     </div>
 
@@ -101,7 +127,7 @@
     data() {
       return {
         selfValue: this.value,
-        showControls: true,
+        showControls: false,
         view: 'read'
       }
     },
@@ -148,6 +174,11 @@
         })
 
         this.$refs.deleteModal.hide()
+      },
+
+      switchToEditMode() {
+        this.$refs.valueEditor.focus()
+        this.view = 'edit'
       }
     },
 
@@ -162,7 +193,7 @@
   .value
     &-container
       overflow: hidden
-      padding: 2px
+      padding: 2px 2px 2px 29px
       line-height: 29px
 
       &:hover
@@ -177,6 +208,7 @@
       float: left
       width: auto
       margin-left: 15px
+      height: 29px
 
     &-editor
       overflow: hidden
@@ -203,4 +235,20 @@
 
   .badge
     font-size: 14px
+
+  .r-edit-input
+    float: right
+    width: 130px
+    font-size: 16px
+    outline: none
+    border: none
+    padding: 0
+    margin-left: 10px
+    border-bottom: 2px solid #000
+    border-radius: 0
+
+    &:focus
+      outline: none
+      border: none
+      border-bottom: 2px solid #000
 </style>
