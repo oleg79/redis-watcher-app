@@ -97,7 +97,7 @@ export default new Vuex.Store({
       state.keyValue = _.omit(state.keyValue, path)
     },
 
-    pushNotification: (state:Object, { data, type }: Object) => {
+    pushNotification: (state:Object, { type, ...data }: Object) => {
       state.notifications = {
         ...state.notifications,
         [type]: [...state.notifications[type], data]

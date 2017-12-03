@@ -27,7 +27,8 @@
 
 <script>
 /** @flow */
-import { mapMutations } from 'vuex'
+import Vue from 'vue'
+import { mapState, mapMutations } from 'vuex'
 // Components
 import TopNavigation from './components/top-navigation/TopNavigation.vue'
 import KeysList from './components/info-list/KeysList.vue'
@@ -44,25 +45,39 @@ export default {
     Notifier
   },
 
+  computed: {
+    ...mapState(['appSettings'])
+  },
 
   methods: {
     ...mapMutations(['pushNotification'])
   },
 
+
   created() {
+
+    const { language, checkInterval } = this.appSettings
+    Vue.setLocale(language)
+
     const { ipcRenderer } = this.$electron
 
     ipcRenderer.on('app.error', (event, data) => {
-      this.pushNotification({ data, type: 'error' })
+      console.log(data)
+      this.pushNotification(data)
     })
 
     ipcRenderer.on('app.info', (event, data) => {
-      this.pushNotification(data, 'info')
+      this.pushNotification(data)
     })
 
     ipcRenderer.on('app.success', (event, data) => {
-      this.pushNotification(data, 'success')
+      this.pushNotification(data)
     })
+
+    // setInterval(() => {
+    //   const data = { code:'redis.connection.error', data:{}, type: 'info' }
+    //   this.pushNotification(data)
+    // }, checkInterval)
   }
 };
 </script>

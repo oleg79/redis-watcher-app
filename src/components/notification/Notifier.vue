@@ -1,5 +1,5 @@
 <template>
-  <div class="notification-container">
+  <div class="notification-container" v-if="isAppFocused">
     <Notification
       v-for="(notification, index) in errorNotifications"
       :key="index"
@@ -25,6 +25,7 @@
 
 <script>
   import { mapGetters } from 'vuex'
+  import makeNotification from '../../services/notification'
   import Notification from './Notification'
 
   export default {
@@ -32,15 +33,44 @@
       Notification
     },
 
+    data() {
+      return {
+        isAppFocused: true
+      }
+    },
+
     computed: {
       ...mapGetters([
         'errorNotifications',
         'infoNotifications',
         'successNotifications'
-      ])
+      ]),
+
+      isMinimazed() {
+        return this.$electron.remote.getCurrentWindow().isMinimized()
+      }
     },
 
+    mounted() {
+      document.addEventListener("visibilitychange", () => {
+        this.isAppFocused = document.hidden && document.visibilityState === 'visible'
+      })
+    },
 
+    updated() {
+      if (!this.isAppFocused) {
+        [
+          ...this.infoNotifications,
+          ...this.errorNotifications,
+          ...this.successNotifications
+        ].forEach(({type, code, data}) => {
+          makeNotification({
+            title: `Redis Watcher - ${type}`,
+            tag: code
+          })
+        })
+      }
+    }
   }
 </script>
 

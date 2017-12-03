@@ -1,3 +1,4 @@
 export default {
-  language: 'en'
+  language: 'ru',
+  checkInterval: 10000
 }

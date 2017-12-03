@@ -14,6 +14,7 @@ const { app, BrowserWindow, ipcMain } = electron
 
 let mainWindow
 let redisClient
+let focused
 
 const createWindow = () => {
   const {width, height} = electron.screen.getPrimaryDisplay().workAreaSize
@@ -32,6 +33,14 @@ const createWindow = () => {
   }))
 
   mainWindow.webContents.openDevTools()
+
+  mainWindow.on('focus', () => {
+    focused = true
+  })
+
+  mainWindow.on('blur', () => {
+    focused = false
+  })
 
   mainWindow.on('closed', () => {
     if (process.platform !== 'darwin') {

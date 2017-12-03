@@ -2,9 +2,9 @@
   <b-form @submit.prevent="connect">
     <b-form-group
       id="redis_connection_group"
-      label="Select connection"
+      :label="$formatMessage({ id: 'select.connection' })"
       label-for="redis_connection"
-      description="Please, select connection"
+      :description="$formatMessage({ id: 'select.connection.description' })"
     >
       <b-form-select
         v-model="selected"
@@ -15,13 +15,17 @@
       </b-form-select>
     </b-form-group>
 
-    <b-button type="submit" variant="outline-primary">connect</b-button>
-    <b-button variant="outline-primary">add connection</b-button>
+    <b-button type="submit" variant="outline-primary">
+      {{ $formatMessage({ id: 'connect' }) }}
+    </b-button>
+    <b-button variant="outline-primary">
+      {{ $formatMessage({ id: 'add.connection' }) }}
+    </b-button>
     <b-button
       variant="outline-danger"
       @click="exitApp"
     >
-      exit
+      {{ $formatMessage({ id: 'exit' }) }}
     </b-button>
   </b-form>
 </template>

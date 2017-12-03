@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import VueIntl from 'vue-intl'
 import VueElectron from 'vue-electron'
 import lodash from 'lodash'
 import VueLodash from 'vue-lodash'
@@ -8,9 +9,16 @@ import Icon from 'vue-awesome/components/Icon.vue'
 import store from './store'
 import App from './App.vue'
 
+import en from './messages/en'
+import ru from './messages/ru'
+
 Vue.use(VueElectron)
 Vue.use(VueLodash, lodash)
 Vue.use(BootstrapVue)
+Vue.use(VueIntl)
+
+Vue.registerMessages('en', en)
+Vue.registerMessages('ru', ru)
 
 Vue.component('icon', Icon)
 

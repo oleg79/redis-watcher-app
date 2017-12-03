@@ -5,6 +5,7 @@ const os = require('os')
 const redis = require('redis')
 /* $FlowFixMe */
 const bluebird = require('bluebird')
+const { createError, createInfo, createSuccess } = require('../notificationCreator') // eslint-disable-line
 const { REDIS_CONNECTION_ERROR, REDIS_CONNECTION_SUCCESS } = require('../../channels_constants')
 
 bluebird.promisifyAll(redis.RedisClient.prototype)
@@ -24,11 +25,10 @@ class Redis {
 
   // instance methods
   handleClientError (error:Object) {
-    this.ipcRenderer.send(REDIS_CONNECTION_ERROR, {
-      type: 'error',
-      code: 'redis.connection.error',
-      data: error
-    })
+    this.ipcRenderer.send(
+      REDIS_CONNECTION_ERROR,
+      createError('redis.connection.error', error)
+    )
     this.client.quit()
   }
 

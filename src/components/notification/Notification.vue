@@ -8,15 +8,15 @@
       v-if="visible"
       class="notification-body"
       :class="[
-        `notification-${notification.type}`,
-        `notification-body-${notification.type}`
+        `notification-${type}`,
+        `notification-body-${type}`
         ]"
       @mouseover="delta = 0"
       @mouseout="delta = 1"
     >
       <div
         class="notification-title"
-        :class="`notification-${notification.type}-title`"
+        :class="`notification-${type}-title`"
       >
         <div class="title">
           title
@@ -32,11 +32,11 @@
         </button>
       </div>
       <div class="notification-text">
-        {{ text }}
+        {{ $formatMessage({ id: notification.code }) }}
       </div>
       <div
         class="notification-duration"
-        :class="`notification-${notification.type}-duration`"
+        :class="`notification-${type}-duration`"
         :style="{ width: `${duration}%` }"
       ></div>
     </div>
@@ -44,7 +44,6 @@
 </template>
 
 <script>
-  import makeNotification from '../../services/notification';
   import { Data } from './types'
 
   export default {
@@ -57,12 +56,6 @@
         duration: 0,
         maxDuration: 100,
         delta: 1
-      }
-    },
-
-    computed: {
-      text() {
-        return this.notification.type
       }
     },
 
@@ -127,16 +120,25 @@
       background: #BF0F00
       color: #fff
 
-      &-title
-        background: #7F0A00
-
-
+      &-title,
       &-duration
         background: #7F0A00
 
 
     &-info
+      background: #114BBF
+      color: #fff
+
+      &-title,
+      &-duration
+        background: #0B327F
 
     &-success
+      background: #88BF15
+      color: #fff
+
+      &-title,
+      &-duration
+        background: #5B7F0E
 
 </style>
