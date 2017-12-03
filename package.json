@@ -16,6 +16,7 @@
     "flow:build": "flow-remove-types ./app/ -d ./lib/ --all --pretty"
   },
   "dependencies": {
+    "animate.css": "^3.5.2",
     "bluebird": "^3.5.1",
     "bootstrap": "^4.0.0-beta.2",
     "bootstrap-vue": "^1.1.0",

@@ -24,7 +24,13 @@ export default new Vuex.Store({
     currentKey: null,
     keyValue: null,
     redisError: null,
-    connected: false
+    connected: false,
+
+    notifications: {
+      error: [],
+      success: [],
+      info: [],
+    }
   },
 
   getters: {
@@ -38,7 +44,16 @@ export default new Vuex.Store({
       })),
 
     isRedisError: state =>
-      state.redisError !== null
+      state.redisError !== null,
+
+    errorNotifications: state =>
+      state.notifications.error,
+
+    infoNotifications: state =>
+      state.notifications.info,
+
+    successNotifications: state =>
+      state.notifications.success,
   },
 
   mutations: {
@@ -80,6 +95,13 @@ export default new Vuex.Store({
 
     deleteKeyValue: (state:Object, path:string) => {
       state.keyValue = _.omit(state.keyValue, path)
+    },
+
+    pushNotification: (state:Object, { data, type }: Object) => {
+      state.notifications = {
+        ...state.notifications,
+        [type]: [...state.notifications[type], data]
+      }
     }
   },
 

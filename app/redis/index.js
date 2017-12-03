@@ -24,7 +24,11 @@ class Redis {
 
   // instance methods
   handleClientError (error:Object) {
-    this.ipcRenderer.send(REDIS_CONNECTION_ERROR, error)
+    this.ipcRenderer.send(REDIS_CONNECTION_ERROR, {
+      type: 'error',
+      code: 'redis.connection.error',
+      data: error
+    })
     this.client.quit()
   }
 
