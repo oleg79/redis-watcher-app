@@ -18,6 +18,14 @@ const messages = {
   'pass.description': 'Please, specify Redis password',
   'additional.settings.label': 'Additional Settings',
   'redis.pubsub.message': 'New Message',
+  'redis.connection.info': 'Info',
+  'connection.info': 'CONNECTION',
+  'database.info': 'DATABASE',
+  'key.info': 'KEY',
+  'menu.title': 'MENU',
+  'available.connections': 'Available connections',
+  'subscribers.list': 'subscribers list',
+  'available.databases': 'Available databases',
 }
 
 export default messages

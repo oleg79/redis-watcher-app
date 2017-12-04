@@ -172,3 +172,14 @@ ipcMain.on('redis.pubsub:subscribe', (event, channelName) => {
     }))
   })
 })
+
+ipcMain.on('redis.pubsub:unsubscribe', (event, channelName) => {
+  redisClient.unsubscribe(channelName, (channel, message) => {
+    event.sender.send('app.info', createInfo('redis.pubsub.message', {
+      channel,
+      message
+    }))
+  })
+})
+
+

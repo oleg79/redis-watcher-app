@@ -5,19 +5,16 @@
     leave-active-class="animated slideOutLeft"
   >
     <div class="left-side-menu" v-show="menu.isOpened">
-      <h3 class="text-center">Menu</h3>
+      <h3 class="text-center">{{ $formatMessage({ id: 'menu.title' }) }}</h3>
 
       <div class="menu-container">
 
         <div class="menu-item">
           <b-dropdown
             id="_connections"
-            text="Available connections"
+            :text="$formatMessage({ id: 'available.connections' })"
             class="m-md-2 menu-item-button"
           >
-            <slot name="button-content">
-              <a class="menu-item-button">Available connections</a>
-            </slot>
             <b-dropdown-item
               v-for="connection in redisConnections"
               :key="connection.host"
@@ -30,7 +27,7 @@
         <div class="menu-item">
           <b-dropdown
             id="_databases"
-            text="Available databases"
+            :text="$formatMessage({ id: 'available.databases' })"
             class="m-md-2 menu-item-button"
           >
             <b-dropdown-item
@@ -44,13 +41,16 @@
         </div>
 
         <div class="menu-item">
+          <h5 class="text-center">{{ $formatMessage({ id: 'subscribers.list' }) }}</h5>
           <div>
-            <input
-              type="text"
-              class="add-subscribers"
-              v-model="newSubscriber"
-            >
-            <button @click="addSubscriber">+</button>
+            <form @submit.prevent="addSubscriber">
+              <input
+                type="text"
+                placeholder="добавить подписчика"
+                class="add-subscribers"
+                v-model="newSubscriber"
+              >
+            </form>
           </div>
           <div class="subscribers-list">
             <ul>
@@ -59,7 +59,12 @@
                 :key="index"
               >
                 <span>{{ subscriber }}</span>
-                <button @click="deleteSubscriber(index)">-</button>
+                <b-btn variant="outline-danger" @click="deleteSubscriber(index)">
+                  <icon
+                    name="trash-o"
+                    scale="1"
+                  ></icon>
+                </b-btn>
               </li>
             </ul>
           </div>
@@ -124,6 +129,7 @@
         if (trimmed.length && this.subscribers.indexOf(trimmed) === -1) {
           this.pushSubscriber(trimmed)
           this.$electron.ipcRenderer.send('redis.pubsub:subscribe', trimmed)
+          this.newSubscriber = ''
         }
       }
     },
@@ -164,4 +170,22 @@
     background: none
     border: none
 
+  .add-subscribers
+    margin-left: 8px
+
+  .subscribers-list
+    ul
+      list-style: none
+      padding: 0
+      margin-left: 8px
+
+      li
+        overflow: hidden
+        margin-bottom: 10px
+
+        button
+          float: right
+
+        span
+          line-height: 2.5em
 </style>

@@ -69,7 +69,6 @@ export default {
     })
 
     ipcRenderer.on('app.info', (event, data) => {
-      console.log(data)
       this.pushNotification(data)
     })
 

@@ -18,6 +18,14 @@ const messages = {
   'pass.description': 'Пожалуйста, укажите пароль Redis',
   'additional.settings.label': 'Дополнительные настройки',
   'redis.pubsub.message': 'Новое Сообщение',
+  'redis.connection.info': 'Инфо',
+  'connection.info': 'СОЕДИНЕНИЕ',
+  'database.info': 'БАЗА ДАННЫХ',
+  'key.info': 'КЛЮЧ',
+  'menu.title': 'МЕНЮ',
+  'available.connections': 'доступные соединения',
+  'subscribers.list': 'список подписчиков',
+  'available.databases': 'доступные базы',
 }
 
 export default messages

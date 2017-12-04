@@ -22,7 +22,7 @@
       class="current current-connection"
       v-if="currentConnection"
     >
-      <b-badge variant="primary">CONNECTION :</b-badge>
+      <b-badge variant="primary">{{ $formatMessage({ id: 'connection.info' }) }} :</b-badge>
       <b-badge variant="light">{{ `${currentConnection.host}:${currentConnection.port}` }}</b-badge>
     </div>
 
@@ -30,7 +30,7 @@
       class="current current-database"
       v-if="currentDatabase"
     >
-      <b-badge variant="primary">DATABASE :</b-badge>
+      <b-badge variant="primary">{{ $formatMessage({ id: 'database.info' }) }} :</b-badge>
       <b-badge variant="light">{{ currentDatabase.name }}</b-badge>
     </div>
 
@@ -38,7 +38,7 @@
       class="current current-key"
       v-if="currentKey"
     >
-      <b-badge variant="primary">KEY :</b-badge>
+      <b-badge variant="primary">{{ $formatMessage({ id: 'key.info' }) }} :</b-badge>
       <b-badge variant="light">{{ currentKey }}</b-badge>
     </div>
 

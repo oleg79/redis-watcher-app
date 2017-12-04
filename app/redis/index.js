@@ -22,6 +22,7 @@ class Redis {
     this.client.on('error', this.handleClientError.bind(this))
     this.client.on('connect', this.handleClientConnect.bind(this))
     this.client.on('subscribe', this.handleNewSubscription.bind(this))
+    this.client.on('unsubscribe', this.handleNewSubscription.bind(this))
   }
 
   // instance methods
@@ -50,6 +51,10 @@ class Redis {
   subscribe (channel:string, callback:(any, any) => any) {
     this.client.subscribe(channel)
     this.client.on('message', callback)
+  }
+
+  unsubscribe (channel:string) {
+    this.client.send_command('UNSUBSCRIBE', [channel])
   }
 
   // async methods

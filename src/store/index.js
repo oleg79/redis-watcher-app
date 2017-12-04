@@ -139,7 +139,7 @@ export default new Vuex.Store({
     removeSubscriber: (state:Object, index:number) => {
       state.subscribers = [
         ...state.subscribers.slice(0, index - 1),
-        ...state.subscribers.slice(index)
+        ...state.subscribers.slice(index + 1)
       ]
     },
   },
