@@ -6,7 +6,7 @@ const redis = require('redis')
 /* $FlowFixMe */
 const bluebird = require('bluebird')
 const { createError, createInfo, createSuccess } = require('../notificationCreator') // eslint-disable-line
-const { REDIS_CONNECTION_ERROR, REDIS_CONNECTION_SUCCESS } = require('../../channels_constants')
+const { REDIS_CONNECTION_ERROR, REDIS_CONNECTION_SUCCESS, REDIS_CONNECTION_INFO } = require('../../channels_constants')
 
 bluebird.promisifyAll(redis.RedisClient.prototype)
 bluebird.promisifyAll(redis.Multi.prototype)
@@ -21,6 +21,7 @@ class Redis {
 
     this.client.on('error', this.handleClientError.bind(this))
     this.client.on('connect', this.handleClientConnect.bind(this))
+    this.client.on('subscribe', this.handleNewSubscription.bind(this))
   }
 
   // instance methods
@@ -37,6 +38,18 @@ class Redis {
       REDIS_CONNECTION_SUCCESS,
       createSuccess('redis.connection.success', {})
     )
+  }
+
+  handleNewSubscription () {
+    this.ipcRenderer.send(
+      REDIS_CONNECTION_INFO,
+      createInfo('redis.connection.info', {})
+    )
+  }
+
+  subscribe (channel:string, callback:(any, any) => any) {
+    this.client.subscribe(channel)
+    this.client.on('message', callback)
   }
 
   // async methods

@@ -43,6 +43,28 @@
           </b-dropdown>
         </div>
 
+        <div class="menu-item">
+          <div>
+            <input
+              type="text"
+              class="add-subscribers"
+              v-model="newSubscriber"
+            >
+            <button @click="addSubscriber">+</button>
+          </div>
+          <div class="subscribers-list">
+            <ul>
+              <li
+                v-for="(subscriber, index) in subscribers"
+                :key="index"
+              >
+                <span>{{ subscriber }}</span>
+                <button @click="deleteSubscriber(index)">-</button>
+              </li>
+            </ul>
+          </div>
+        </div>
+
       </div>
     </div>
   </transition>
@@ -50,11 +72,17 @@
 
 <script language="javascript">
   import { mapState, mapGetters, mapMutations } from 'vuex'
+  import Subscriber from '../subscriber/Subscriber'
 
   export default {
+    components: {
+      Subscriber
+    },
+
     data() {
       return {
-        selectedDatabase: null
+        selectedDatabase: null,
+        newSubscriber: ''
       }
     },
 
@@ -65,7 +93,8 @@
         'currentDatabase',
         'currentKey',
         'databases',
-        'redisConnections'
+        'redisConnections',
+        'subscribers'
       ]),
 
       selectedConnection() {
@@ -78,11 +107,24 @@
         'setDatabases',
         'setCurrentDatabase',
         'setKeysSet',
-        'toggleMenu'
+        'toggleMenu',
+        'pushSubscriber',
+        'removeSubscriber'
       ]),
       selectDatabase(database:Object) {
         this.$electron.ipcRenderer.send('redis.database:select', database.name)
         this.selectedDatabase = database
+      },
+      deleteSubscriber(index:number) {
+        this.removeSubscriber(index)
+        this.$electron.ipcRenderer.send('redis.pubsub:unsubscribe', this.subscribers[ index ])
+      },
+      addSubscriber() {
+        const trimmed = this.newSubscriber.replace(' ', '')
+        if (trimmed.length && this.subscribers.indexOf(trimmed) === -1) {
+          this.pushSubscriber(trimmed)
+          this.$electron.ipcRenderer.send('redis.pubsub:subscribe', trimmed)
+        }
       }
     },
 
@@ -97,6 +139,8 @@
         this.setCurrentDatabase(this.selectedDatabase)
         this.setKeysSet(data)
       })
+
+
     }
   }
 </script>
@@ -119,8 +163,5 @@
   .menu-item-button
     background: none
     border: none
-
-
-
 
 </style>

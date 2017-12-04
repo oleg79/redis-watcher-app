@@ -35,7 +35,9 @@ export default new Vuex.Store({
 
     menu: {
       isOpened: false
-    }
+    },
+
+    subscribers: [],
   },
 
   getters: {
@@ -128,7 +130,18 @@ export default new Vuex.Store({
 
     toggleMenu: (state:Object) => {
       state.menu.isOpened = !state.menu.isOpened
-    }
+    },
+
+    pushSubscriber: (state:Object, newSubscriber:string) => {
+      state.subscribers = [...state.subscribers, newSubscriber]
+    },
+
+    removeSubscriber: (state:Object, index:number) => {
+      state.subscribers = [
+        ...state.subscribers.slice(0, index - 1),
+        ...state.subscribers.slice(index)
+      ]
+    },
   },
 
   actions: {}

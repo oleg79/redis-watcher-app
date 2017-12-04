@@ -65,22 +65,17 @@ export default {
     const { ipcRenderer } = this.$electron
 
     ipcRenderer.on('app.error', (event, data) => {
-      console.log(data)
       this.pushNotification(data)
     })
 
     ipcRenderer.on('app.info', (event, data) => {
+      console.log(data)
       this.pushNotification(data)
     })
 
     ipcRenderer.on('app.success', (event, data) => {
       this.pushNotification(data)
     })
-
-    // setInterval(() => {
-    //   const data = { code:'redis.connection.error', data:{}, type: 'info' }
-    //   this.pushNotification(data)
-    // }, checkInterval)
   }
 };
 </script>

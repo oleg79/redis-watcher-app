@@ -86,9 +86,6 @@
       ...mapMutations(['toggleMenu'])
     },
 
-    mounted() {
-      console.log(this.$store.state)
-    }
   }
 </script>
 

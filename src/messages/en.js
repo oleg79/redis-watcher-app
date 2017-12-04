@@ -4,9 +4,20 @@ const messages = {
   'redis.connection.success': 'Connection has been established successfully!',
   'select.connection': 'Select connection',
   'select.connection.description': 'please select connection',
-  connect: 'connect',
+  'connect.label': 'connect',
   'add.connection': 'add connection',
-  exit: 'exit',
+  'exit.label': 'exit',
+  'host.label': 'host',
+  'host.placeholder': 'Enter host',
+  'host.description': 'Please, specify Redis host',
+  'port.label': 'port',
+  'port.placeholder': 'Enter port',
+  'port.description': 'Please, specify Redis port',
+  'pass.label': 'password',
+  'pass.placeholder': 'Enter password',
+  'pass.description': 'Please, specify Redis password',
+  'additional.settings.label': 'Additional Settings',
+  'redis.pubsub.message': 'New Message',
 }
 
 export default messages

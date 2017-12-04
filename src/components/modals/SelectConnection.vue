@@ -16,7 +16,7 @@
     </b-form-group>
 
     <b-button type="submit" variant="outline-primary">
-      {{ $formatMessage({ id: 'connect' }) }}
+      {{ $formatMessage({ id: 'connect.label' }) }}
     </b-button>
     <b-button variant="outline-primary">
       {{ $formatMessage({ id: 'add.connection' }) }}
@@ -25,7 +25,7 @@
       variant="outline-danger"
       @click="exitApp"
     >
-      {{ $formatMessage({ id: 'exit' }) }}
+      {{ $formatMessage({ id: 'exit.label' }) }}
     </b-button>
   </b-form>
 </template>

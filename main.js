@@ -125,6 +125,12 @@ ipcMain.on('redis.key:get.value', async (event, key) => {
       const output = zlib.createGunzip()
     } catch (e) {
       parsedValue = null
+      event.sender.send(
+        'app.error',
+        createError('redis.parse.value.error', {
+          key
+        })
+      )
     }
   }
 
@@ -151,6 +157,18 @@ ipcMain.on('redis.key:update', async (event, { key, value }) => {
       )
     }
   } catch (e) {
-    //
+    event.sender.send(
+      'app.error',
+      createError('redis.update.key.error', {})
+    )
   }
+})
+
+ipcMain.on('redis.pubsub:subscribe', (event, channelName) => {
+  redisClient.subscribe(channelName, (channel, message) => {
+    event.sender.send('app.info', createInfo('redis.pubsub.message', {
+      channel,
+      message
+    }))
+  })
 })

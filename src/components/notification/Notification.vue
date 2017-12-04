@@ -19,7 +19,7 @@
         :class="`notification-${type}-title`"
       >
         <div class="title">
-          title
+          {{ $formatMessage({ id: notification.code }) }}
         </div>
         <button
           class="close"
@@ -32,7 +32,7 @@
         </button>
       </div>
       <div class="notification-text">
-        {{ $formatMessage({ id: notification.code }) }}
+        {{ notificationText }}
       </div>
       <div
         class="notification-duration"
@@ -56,6 +56,17 @@
         duration: 0,
         maxDuration: 100,
         delta: 1
+      }
+    },
+
+    computed: {
+      notificationText() {
+        if (this.notification.code === 'redis.pubsub.message') {
+          const { channel, message } = this.notification.data
+
+          return `${channel} : ${message}`
+        }
+        return ''
       }
     },
 
