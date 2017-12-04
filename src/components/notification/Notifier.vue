@@ -82,6 +82,6 @@
       width: 100%
       position: absolute
       z-index: 9999
-      bottom: 90px
+      bottom: 70px
       height: 120px
 </style>

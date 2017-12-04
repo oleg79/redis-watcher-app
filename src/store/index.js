@@ -22,6 +22,7 @@ export default new Vuex.Store({
     currentDatabase: null,
     keysSet: [],
     currentKey: null,
+    currentKeyTTL: null,
     keyValue: null,
     redisError: null,
     connected: false,
@@ -30,6 +31,10 @@ export default new Vuex.Store({
       error: [],
       success: [],
       info: [],
+    },
+
+    menu: {
+      isOpened: false
     }
   },
 
@@ -43,6 +48,12 @@ export default new Vuex.Store({
         text: `${host}:${port}`
       })),
 
+    redisDatabasesOptions: state =>
+      state.databases.map(({ name, keys }, index) => ({
+        value: index,
+        text: `${name}:${keys}`
+      })),
+
     isRedisError: state =>
       state.redisError !== null,
 
@@ -54,11 +65,18 @@ export default new Vuex.Store({
 
     successNotifications: state =>
       state.notifications.success,
+
+    isMenuOpened: state =>
+      state.menu.isOpened,
   },
 
   mutations: {
     setConnections: (state:Object, payload:Array<Object>) => {
       state.redisConnections = payload
+    },
+
+    setCurrentConnection: (state: Object, payload: any) => {
+      state.currentConnection = payload
     },
 
     setConnected: (state:Object, payload:boolean) => {
@@ -89,6 +107,10 @@ export default new Vuex.Store({
       state.keyValue = payload
     },
 
+    setKeyTTL: (state:Object, payload:any) => {
+      state.currentKeyTTL = payload
+    },
+
     updateKeyValue: (state:Object, { path, value }:Object) => {
       state.keyValue = _.set(_.cloneDeep(state.keyValue), path, value)
     },
@@ -102,6 +124,10 @@ export default new Vuex.Store({
         ...state.notifications,
         [type]: [...state.notifications[type], data]
       }
+    },
+
+    toggleMenu: (state:Object) => {
+      state.menu.isOpened = !state.menu.isOpened
     }
   },
 

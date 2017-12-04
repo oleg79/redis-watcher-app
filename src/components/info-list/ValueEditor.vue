@@ -18,7 +18,10 @@
       ValueResolver
     },
     methods: {
-      ...mapMutations(['setKeyValue'])
+      ...mapMutations([
+        'setKeyValue',
+        'setKeyTTL'
+      ])
     },
 
     computed: {
@@ -26,8 +29,9 @@
     },
 
     created() {
-      this.$electron.ipcRenderer.on('redis.key:receive.value', (event, value:any) => {
-        this.setKeyValue(value)
+      this.$electron.ipcRenderer.on('redis.key:receive.value', (event, { TTL, parsedValue }:Object) => {
+        this.setKeyValue(parsedValue)
+        this.setKeyTTL(TTL)
       })
     }
   }

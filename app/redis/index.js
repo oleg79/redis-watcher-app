@@ -33,7 +33,10 @@ class Redis {
   }
 
   handleClientConnect () {
-    this.ipcRenderer.send(REDIS_CONNECTION_SUCCESS)
+    this.ipcRenderer.send(
+      REDIS_CONNECTION_SUCCESS,
+      createSuccess('redis.connection.success', {})
+    )
   }
 
   // async methods
@@ -65,6 +68,15 @@ class Redis {
     try {
       const value = this.client.getAsync(key)
       return value
+    } catch (e) {
+      return null
+    }
+  }
+
+  async getKeyTTL (key:string) {
+    try {
+      const ttl = await this.client.send_commandAsync('TTL', [key])
+      return ttl
     } catch (e) {
       return null
     }

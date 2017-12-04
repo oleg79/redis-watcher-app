@@ -53,10 +53,14 @@ export default {
   },
 
   methods: {
+    ...mapMutations(['setCurrentConnection']),
     connect() {
-      const { host, port } = this.redisConnections[ this.selected ]
+      const selected = this.redisConnections[ this.selected ]
+      const { host, port } = selected
 
       this.$electron.ipcRenderer.send('connection:try.establish', { host, port })
+
+      this.setCurrentConnection(selected)
     },
   },
 }

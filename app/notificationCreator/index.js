@@ -1,18 +1,16 @@
-/** @flow */
-
-const createError = (code: string, data:Object) => ({
+const createError = (code, data) => ({
   type: 'error',
   code,
   data
 })
 
-const createInfo = (code: string, data:Object) => ({
+const createInfo = (code, data) => ({
   type: 'info',
   code,
   data
 })
 
-const createSuccess = (code: string, data:Object) => ({
+const createSuccess = (code, data) => ({
   type: 'success',
   code,
   data

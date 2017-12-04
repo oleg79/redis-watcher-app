@@ -9,12 +9,24 @@ const { Writable, Readable, Stream } = require('stream')
 const path = require('path')
 const url = require('url')
 const Redis = require('./lib/redis')
+const { createError, createInfo, createSuccess } = require('./app/notificationCreator')
 
-const { app, BrowserWindow, ipcMain } = electron
+const { app, BrowserWindow, ipcMain, Menu } = electron
 
 let mainWindow
 let redisClient
 let focused
+
+const template = [
+  {
+    label: 'options',
+    submenu: []
+  },
+  {
+    label: 'info',
+    submenu: []
+  },
+]
 
 const createWindow = () => {
   const {width, height} = electron.screen.getPrimaryDisplay().workAreaSize
@@ -23,7 +35,7 @@ const createWindow = () => {
     height,
     minWidth: 1200,
     minHeight: 700,
-    icon: path.join(__dirname, 'assets/icons/png/64x64.png')
+    icon: path.join(__dirname, 'assets/icons/png/96x96.png')
   })
 
   mainWindow.loadURL(url.format({
@@ -47,6 +59,10 @@ const createWindow = () => {
       app.quit()
     }
   })
+
+  const menu = Menu.buildFromTemplate(template)
+
+  Menu.setApplicationMenu(menu)
 }
 
 app.on('ready', createWindow)
@@ -112,13 +128,28 @@ ipcMain.on('redis.key:get.value', async (event, key) => {
     }
   }
 
-  event.sender.send('redis.key:receive.value', parsedValue)
+  let TTL
+  try {
+    TTL = await redisClient.getKeyTTL(key)
+  } catch (e) {
+    TTL = null
+  }
+
+  event.sender.send('redis.key:receive.value', { TTL, parsedValue })
 })
 
 ipcMain.on('redis.key:update', async (event, { key, value }) => {
   try {
     const result = await redisClient.setValue(key, serialize(value))
-    console.log(result)
+    if (result === 'OK') {
+      event.sender.send(
+        'app.success',
+        createSuccess('redis.update.key.success', {
+          key,
+          value
+        })
+      )
+    }
   } catch (e) {
     //
   }

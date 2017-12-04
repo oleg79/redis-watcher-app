@@ -135,7 +135,7 @@
 
     &-success
       background: #88BF15
-      color: #fff
+      color: #252525
 
       &-title,
       &-duration

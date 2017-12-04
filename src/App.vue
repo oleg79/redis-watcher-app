@@ -1,10 +1,11 @@
 <template>
   <div class="container-fluid">
-    <TopNavigation
 
-    />
+    <LeftSideMenu/>
 
-    <div class="row">
+    <StatusBar/>
+
+    <div class="row custom-offset">
       <div class="col-12">
         <div class="row">
           <div class="col-6">
@@ -30,7 +31,8 @@
 import Vue from 'vue'
 import { mapState, mapMutations } from 'vuex'
 // Components
-import TopNavigation from './components/top-navigation/TopNavigation.vue'
+import LeftSideMenu from './components/menu/LeftSideMenu.vue'
+import StatusBar from './components/status/StatusBar.vue'
 import KeysList from './components/info-list/KeysList.vue'
 import ValueEditor from './components/info-list/ValueEditor.vue'
 import StartModal from './components/modals/StartModal.vue'
@@ -38,7 +40,8 @@ import Notifier from './components/notification/Notifier.vue'
 
 export default {
   components: {
-    TopNavigation,
+    LeftSideMenu,
+    StatusBar,
     KeysList,
     ValueEditor,
     StartModal,
@@ -91,4 +94,8 @@ export default {
     overflow-x: hidden
     overflow-y: auto
     background: #fff
+
+  .custom-offset
+    position: relative
+    top: 50px
 </style>
