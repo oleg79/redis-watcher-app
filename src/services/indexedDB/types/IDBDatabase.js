@@ -1,4 +1,7 @@
 /** @flow */
+import type { IDBObjectStore } from './IDBObjectStore'
+import type { IDBTransaction } from './IDBTransaction'
+
 type Props = {
   name: string,
   version: number,
@@ -13,10 +16,10 @@ type EventHandlers = {
 }
 
 type Methods = {
-  close: Function,
-  createObjectStore: Function,
-  deleteObjectStore: Function,
-  transaction: Function
+  close: () => void,
+  createObjectStore: (name:string, options?:Object) => IDBObjectStore,
+  deleteObjectStore: (name:string) => void,
+  transaction: (name:string|Array<string>, mode?:string) => IDBTransaction
 }
 
-export type IDBDatabase = Props & EventHandlers & Methods
+export type IDBDatabase = Props & EventHandlers & EventTarget & Methods
