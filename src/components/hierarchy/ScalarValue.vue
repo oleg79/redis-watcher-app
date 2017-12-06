@@ -91,8 +91,9 @@
       no-close-on-esc
     >
       <div>
-        <b-alert show variant="warning">Are you sure?</b-alert>
+        <b-alert show variant="warning">{{ $formatMessage({ id: 'delete.confirm' }) }}</b-alert>
         <div>
+          {{ $formatMessage({ id: 'delete.confirm.text' }) }}
           {{ pathAsString }} : {{ value }}
         </div>
         <div>
@@ -100,14 +101,14 @@
             variant="danger"
             @click="deleteValue"
           >
-            delete
+            {{ $formatMessage({ id: 'delete.ok' }) }}
           </b-button>
 
           <b-button
             variant="primary"
             @click="closeDeleteModal"
           >
-            cancel
+            {{ $formatMessage({ id: 'delete.cancel' }) }}
           </b-button>
         </div>
       </div>

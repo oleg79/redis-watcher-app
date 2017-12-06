@@ -26,6 +26,10 @@ const messages = {
   'available.connections': 'доступные соединения',
   'subscribers.list': 'список подписчиков',
   'available.databases': 'доступные базы',
+  'delete.confirm': 'Пожалуйста, подтвердите действие',
+  'delete.confirm.text': 'Вы уверены, что хотите удалить следующее сзначение?',
+  'delete.ok': 'Да',
+  'delete.cancel': 'Отмена',
 }
 
 export default messages

@@ -26,6 +26,10 @@ const messages = {
   'available.connections': 'Available connections',
   'subscribers.list': 'subscribers list',
   'available.databases': 'Available databases',
+  'delete.confirm': 'Please, confirm the action',
+  'delete.confirm.text': 'Are you sure that you want to delete the following value?',
+  'delete.ok': 'Confirm',
+  'delete.cancel': 'Cancel',
 }
 
 export default messages
