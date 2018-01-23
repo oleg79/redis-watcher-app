@@ -44,7 +44,7 @@ const createWindow = () => {
     slashes: true
   }))
 
-  mainWindow.webContents.openDevTools()
+  // mainWindow.webContents.openDevTools()
 
   mainWindow.on('focus', () => {
     focused = true
